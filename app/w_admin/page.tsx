@@ -8,17 +8,22 @@ import { Input } from '@/components/ui/input'
 
 export default function AdminLogin() {
   const router = useRouter()
-  const { login, isAuthenticated } = useAuth()
+  const { login, isAuthenticated, isMounted } = useAuth()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isMounted && isAuthenticated) {
       router.push('/w_admin/dashboard')
     }
-  }, [isAuthenticated, router])
+  }, [isAuthenticated, isMounted, router])
+
+  // Prevent hydration mismatch - show nothing until client is mounted
+  if (!isMounted) {
+    return null
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

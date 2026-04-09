@@ -123,3 +123,23 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom animations for chatbot */
+@layer utilities {
+  .delay-100 {
+    animation-delay: 100ms;
+  }
+  
+  .delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .glow {
+    box-shadow: 0 0 20px rgba(var(--color-accent), 0.3);
+  }
+
+  .glow-cta {
+    box-shadow: 0 0 20px rgba(var(--color-destructive), 0.3);
+  }
+}
+

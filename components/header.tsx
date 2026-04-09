@@ -2,15 +2,18 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { Menu, X } from 'lucide-react'
+import { usePathname, useRouter } from 'next/navigation'
+import { Menu, X, LogOut, User } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { useAuth } from '@/contexts/auth-provider'
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
+  const router = useRouter()
+  const { isAuthenticated, user, userProfile, signOut, isLoading } = useAuth()
 
   useEffect(() => {
     setMounted(true)
@@ -71,14 +74,43 @@ export function Header() {
             ))}
           </nav>
 
-          {/* CTA Button */}
-          <div className="hidden sm:block">
-            <Button
-              asChild
-              className="bg-gradient-to-r from-destructive to-accent text-white border-0 glow-cta font-semibold shadow-lg"
-            >
-              <Link href="/contact">Get Started</Link>
-            </Button>
+          {/* CTA Button - Desktop */}
+          <div className="hidden sm:flex items-center gap-3">
+            {!isLoading && isAuthenticated ? (
+              <>
+                <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-muted-foreground">
+                  <User className="h-4 w-4" />
+                  <span className="hidden lg:inline max-w-[150px] truncate">{userProfile?.full_name || user?.email}</span>
+                </div>
+                <Button
+                  onClick={async () => {
+                    await signOut()
+                    router.push('/')
+                  }}
+                  variant="outline"
+                  size="sm"
+                  className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                >
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Sign Out
+                </Button>
+              </>
+            ) : !isLoading ? (
+              <>
+                <Button
+                  asChild
+                  className="glass rounded-full px-5 py-2 h-auto text-sm font-semibold text-foreground border border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/40 transition-all duration-300"
+                >
+                  <Link href="/auth/login">Sign In</Link>
+                </Button>
+                <Button
+                  asChild
+                  className="bg-gradient-to-r from-destructive to-accent text-white border-0 glow-cta font-semibold shadow-lg hover:shadow-xl transition-all h-auto py-2"
+                >
+                  <Link href="/auth/signup">Sign Up</Link>
+                </Button>
+              </>
+            ) : null}
           </div>
 
           {/* Mobile Menu Button */}
@@ -112,12 +144,49 @@ export function Header() {
                 {link.label}
               </Link>
             ))}
-            <Button
-              asChild
-              className="mt-3 w-full bg-gradient-to-r from-destructive to-accent text-white border-0 font-semibold"
-            >
-              <Link href="/contact">Get Started</Link>
-            </Button>
+            
+            {/* Mobile Auth Section */}
+            {!isLoading && (
+              <>
+                {isAuthenticated ? (
+                  <>
+                    <div className="px-4 py-3 mt-2 rounded-lg bg-white/5 border border-white/10">
+                      <p className="text-xs text-muted-foreground mb-1">Signed in as</p>
+                      <p className="text-sm font-semibold text-foreground truncate">{userProfile?.full_name || user?.email}</p>
+                    </div>
+                    <Button
+                      onClick={async () => {
+                        await signOut()
+                        setIsOpen(false)
+                        router.push('/')
+                      }}
+                      variant="destructive"
+                      className="w-full text-destructive"
+                    >
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Sign Out
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      asChild
+                      className="w-full mt-2 glass rounded-xl px-4 py-2.5 h-auto font-semibold text-foreground border border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/40 transition-all duration-300"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <Link href="/auth/login">Sign In</Link>
+                    </Button>
+                    <Button
+                      asChild
+                      className="w-full bg-gradient-to-r from-destructive to-accent text-white border-0 font-semibold rounded-xl h-auto py-2.5 hover:shadow-lg hover:shadow-accent/50 transition-all duration-300"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <Link href="/auth/signup">Sign Up</Link>
+                    </Button>
+                  </>
+                )}
+              </>
+            )}
           </nav>
         )}
       </div>

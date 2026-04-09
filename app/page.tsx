@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import {
   BarChart3,
   TrendingUp,
@@ -8,6 +9,7 @@ import {
   Users,
   CheckCircle2,
   ArrowRight,
+  LogOut,
 } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Header } from '@/components/header'
@@ -18,8 +20,11 @@ import { CaseStudyCard } from '@/components/case-study-card'
 import { VideoBackground } from '@/components/video-background'
 import { TestimonialCarousel } from '@/components/testimonial-carousel'
 import { containerVariants, staggerChild } from '@/lib/animations'
+import { useAuth } from '@/contexts/auth-provider'
 
 export default function Home() {
+  const { isAuthenticated, user, userProfile, signOut, isLoading } = useAuth()
+  const router = useRouter()
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -80,6 +85,84 @@ export default function Home() {
           </div>
         </VideoBackground>
       </section>
+
+      {/* Authentication Status Section */}
+      {!isLoading && !isAuthenticated && (
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="px-4 py-8 sm:py-12 bg-gradient-to-r from-primary/10 via-background to-accent/10 border-b border-primary/20"
+        >
+          <div className="mx-auto max-w-7xl">
+            <div className="glass rounded-2xl border border-primary/20 bg-white/5 backdrop-blur-xl p-6 sm:p-8">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+                <div>
+                  <h3 className="text-2xl font-bold text-foreground mb-2">Ready to Transform Your Business?</h3>
+                  <p className="text-muted-foreground">Create an account or sign in to get started with our marketing services.</p>
+                </div>
+                <div className="flex gap-3 w-full sm:w-auto">
+                  <Button
+                    asChild
+                    size="lg"
+                    className="flex-1 sm:flex-none glass rounded-xl px-6 py-3 h-auto font-semibold text-foreground border border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/40 transition-all duration-300"
+                  >
+                    <Link href="/auth/login">Sign In</Link>
+                  </Button>
+                  <Button
+                    asChild
+                    size="lg"
+                    className="flex-1 sm:flex-none bg-gradient-to-r from-primary to-accent text-white border-0 font-semibold rounded-xl h-auto px-6 py-3 hover:shadow-lg hover:shadow-primary/50 transition-all duration-300"
+                  >
+                    <Link href="/auth/signup">Create Account</Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.section>
+      )}
+
+      {/* Authenticated User Welcome Section */}
+      {!isLoading && isAuthenticated && (
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="px-4 py-8 sm:py-12 bg-gradient-to-r from-accent/10 via-background to-primary/10 border-b border-accent/20"
+        >
+          <div className="mx-auto max-w-7xl">
+            <div className="glass rounded-2xl border border-accent/20 bg-white/5 backdrop-blur-xl p-6 sm:p-8">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+                <div>
+                  <h3 className="text-2xl font-bold text-foreground mb-2">Welcome back, {userProfile?.full_name || user?.email?.split('@')[0]}! 👋</h3>
+                  <p className="text-muted-foreground">You're all set. Check out our services or start a new campaign today.</p>
+                </div>
+                <div className="flex gap-3 w-full sm:w-auto">
+                  <Button
+                    asChild
+                    size="lg"
+                    className="flex-1 sm:flex-none bg-gradient-to-r from-primary to-primary/70 text-white border-0 font-semibold rounded-xl h-auto px-6 py-3 hover:shadow-lg hover:shadow-primary/50 transition-all duration-300"
+                  >
+                    <Link href="/services">View Services</Link>
+                  </Button>
+                  <Button
+                    onClick={async () => {
+                      await signOut()
+                      router.push('/')
+                    }}
+                    size="lg"
+                    className="flex-1 sm:flex-none glass rounded-xl px-6 py-3 h-auto font-semibold text-destructive border border-destructive/20 bg-destructive/5 hover:bg-destructive/10 hover:border-destructive/40 transition-all duration-300"
+                  >
+                    <LogOut className="h-4 w-4 mr-2" />
+                    Sign Out
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.section>
+      )}
 
       {/* Social Proof Section */}
       <section className="border-y border-border bg-card/50 px-4 py-12">

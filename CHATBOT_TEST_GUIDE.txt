@@ -1,0 +1,192 @@
+================================================================================
+                    CHATBOT TEST GUIDE - SAMPLE QUESTIONS
+================================================================================
+
+This file contains all the types of questions the chatbot can answer. 
+Use these to test the chatbot functionality.
+
+================================================================================
+1. GREETING QUESTIONS
+================================================================================
+- Hi
+- Hello
+- Hey
+- Hi there
+- What's up
+
+
+================================================================================
+2. SERVICE QUERIES (Ask about specific services or all services)
+================================================================================
+
+SERVICES AVAILABLE:
+1. Social Media Marketing - $2,999/month (Rating: 4.8/5)
+2. Paid Advertising - $4,999/month (Rating: 4.9/5)
+3. SEO Optimization - $3,499/month (Rating: 4.7/5)
+4. Web Development - $5,999/month (Rating: 4.9/5)
+5. Brand Strategy - $3,999/month (Rating: 4.8/5)
+6. Analytics & Reporting - $1,999/month (Rating: 4.6/5)
+
+EXAMPLE QUERIES:
+- What services do you offer?
+- Tell me about social media marketing
+- Show me paid advertising
+- What does SEO optimization include?
+- I need web development
+- What about brand strategy?
+- Do you have analytics services?
+- How much do your services cost?
+- What's the price of social media?
+- How much for web development?
+- What are your service fees?
+
+
+================================================================================
+3. PRICING & PLANS QUESTIONS
+================================================================================
+
+PRICING PLANS:
+- Starter Package: $1,999/month (Basic services)
+- Professional Package: $3,999/month (POPULAR - Most features)
+- Enterprise Package: $5,999/month (Complete solution)
+
+EXAMPLE QUERIES:
+- What's your pricing?
+- Show me your plans
+- How much does it cost?
+- What are your pricing options?
+- Do you have packages?
+- What's the most expensive service?
+- What's the cheapest option?
+- Tell me about your pricing plans
+- How much for enterprise?
+
+
+================================================================================
+4. PROJECT TRACKING & STATUS QUESTIONS
+================================================================================
+
+ACTIVE PROJECTS:
+1. Q1 Social Media Campaign - In Progress (65% complete)
+   - Service: Social Media Marketing
+   - Duration: Mar 1 - Apr 1, 2026
+
+2. Website Redesign - Planning (10% complete)
+   - Service: Web Development
+   - Duration: Apr 15 - Jun 15, 2026
+
+3. Brand Identity Refresh - In Progress (85% complete)
+   - Service: Brand Strategy
+   - Duration: Feb 15 - Mar 15, 2026
+
+EXAMPLE QUERIES:
+- Where is my project?
+- What's the status of my order?
+- Show me my projects
+- How's the campaign going?
+- Track my project progress
+- Where's the website redesign?
+- What about the brand refresh?
+- How far along is my social media campaign?
+
+
+================================================================================
+5. FAQ QUESTIONS (Chatbot knows these specific questions)
+================================================================================
+
+The chatbot has 10 common questions it can answer:
+
+1. What is included in the Social Media Marketing service?
+   Keywords: social, media, included, what
+
+2. How long does it take to see results?
+   Keywords: results, timeline, how long, when
+
+3. What is your refund policy?
+   Keywords: refund, money back, guarantee, policy
+
+4. Do you require a long-term contract?
+   Keywords: contract, long-term, commitment, cancel
+
+5. What payment methods do you accept?
+   Keywords: payment, accept, card, methods
+
+6. How do you measure campaign success?
+   Keywords: measure, success, metrics, kpi
+
+7. What is the typical onboarding process?
+   Keywords: onboarding, process, start, setup
+
+8. Can you help with custom requirements?
+   Keywords: custom, specific, requirements, special
+
+9. Do you provide ongoing support?
+   Keywords: support, help, available, ongoing
+
+10. How do I track my project progress?
+    Keywords: track, progress, dashboard, status
+
+EXAMPLE QUERIES (Can ask similar questions):
+- Do I need a contract?
+- What's your refund policy?
+- Can I cancel anytime?
+- How do you measure success?
+- What payment methods work?
+- How long until I see results?
+- Do you have ongoing support?
+- How does onboarding work?
+- Can you do custom work?
+- How do I track progress?
+
+
+================================================================================
+6. CONTACT & SUPPORT QUESTIONS
+================================================================================
+
+EXAMPLE QUERIES:
+- How can I contact you?
+- What's your email?
+- How do I reach support?
+- Can I call you?
+- Contact information
+- Support options
+
+
+================================================================================
+7. SERVICE RECOMMENDATIONS (Auto-triggered when asking about services)
+================================================================================
+
+When user asks about a specific service, the chatbot automatically recommends related services:
+
+- Social Media Marketing → recommends: Paid Advertising, SEO Optimization
+- Paid Advertising → recommends: Social Media Marketing, Analytics & Reporting
+- SEO Optimization → recommends: Web Development, Analytics & Reporting
+- Web Development → recommends: Social Media Marketing, Brand Strategy
+- Brand Strategy → recommends: Social Media Marketing, Web Development
+- Analytics & Reporting → recommends: Paid Advertising, SEO Optimization
+
+
+================================================================================
+TESTING TIPS
+================================================================================
+
+1. Order doesn't matter - "how much social media" = "social media how much"
+2. The chatbot normalizes input - punctuation is ignored
+3. Partial matches work - "social" will find "Social Media Marketing"
+4. Multiple services trigger "services-list" view with all matching services
+5. Single specific service shows detailed info with recommendations
+6. Pricing queries show all 3 pricing plans
+7. Project queries show active projects with progress bars
+
+================================================================================
+RESPONSE TYPES YOU SHOULD SEE
+================================================================================
+
+1. TEXT - Simple text responses (greetings, contact info, not found)
+2. SERVICE - Single service with details, price, rating, recommendations
+3. SERVICES-LIST - Multiple matching services displayed as cards
+4. PROJECT - Active projects with progress bars and status
+5. FAQ - FAQ card with question, answer, and category
+6. PRICING - All 3 pricing plans with features and popular indicator
+
+================================================================================
