@@ -3,9 +3,8 @@
 import { ThemeProvider } from '@/components/theme-provider'
 import { AuthProvider } from '@/contexts/auth-context'
 import { DataProvider } from '@/contexts/data-context'
-import { ChatBotProvider } from '@/contexts/chatbot-context'
 import { AuthProvider as SupabaseAuthProvider } from '@/contexts/auth-provider'
-import { ChatBot } from '@/components/chatbot'
+import { ChatbaseWidget } from '@/components/chatbase-widget'
 
 export function RootLayoutClient({ children }: { children: React.ReactNode }) {
   return (
@@ -13,10 +12,8 @@ export function RootLayoutClient({ children }: { children: React.ReactNode }) {
       <SupabaseAuthProvider>
         <AuthProvider>
           <DataProvider>
-            <ChatBotProvider>
-              {children}
-              <ChatBot />
-            </ChatBotProvider>
+            {children}
+            <ChatbaseWidget />
           </DataProvider>
         </AuthProvider>
       </SupabaseAuthProvider>

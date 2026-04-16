@@ -42,10 +42,17 @@ export function VideoBackground({
           muted
           loop
           playsInline
+          preload="auto"
           poster={poster}
           className="absolute inset-0 w-full h-full object-cover"
+          onError={(e) => console.warn('Video failed to load:', e)}
         >
+          {/* Try WebM first (better compression) */}
+          <source src={src.replace(/\.mp4$/, '.webm')} type="video/webm" />
+          {/* Fallback to MP4 */}
           <source src={src} type="video/mp4" />
+          {/* Fallback text for older browsers */}
+          Your browser does not support the video tag.
         </video>
       ) : (
         <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-primary/20 via-transparent to-accent/20" />
